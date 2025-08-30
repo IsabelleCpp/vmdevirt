@@ -27,7 +27,7 @@
 #include "llvm/Passes/OptimizationLevel.h"
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Support/FileSystem.h"
-#include "llvm/Support/Host.h"
+#include "llvm/TargetParser/Host.h"
 #include "llvm/Support/TargetSelect.h"
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/Target/TargetMachine.h"
@@ -72,7 +72,6 @@ int __cdecl main(int argc, const char* argv[]) {
   auto image_size = img->get_nt_headers()->optional_header.size_image;
   const auto image_base = img->get_nt_headers()->optional_header.image_base;
 
-  // page align the vector allocation so that unicorn-engine is happy girl...
   tmp.resize(image_size + PAGE_4KB);
   const std::uintptr_t module_base =
       reinterpret_cast<std::uintptr_t>(tmp.data()) +
